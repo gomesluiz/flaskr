@@ -1,4 +1,5 @@
 SHELL=/bin/bash
+APP=flaskr
 
 deps: ## install required packages.
 deps: 
@@ -9,18 +10,19 @@ deps:
 
 freeze: ## update requirements.txt file.
 freeze:
+	@echo "Freezing package dependencies."
 	pip freeze > requirements.txt
 
 # Run flask application.
 run: 
-	flask --app flaskr run 
+	flask --app $(APP) run 
 
 # Run flask application in debug mode.
 debug: 
-	flask --app flaskr run --debug
+	flask --app $(APP) run --debug
 
 lint: 
-	flake8 flaskr
+	flake8 $(APP)
 
 test: lint
 	pytest -ra
