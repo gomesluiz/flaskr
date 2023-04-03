@@ -1,31 +1,46 @@
 SHELL=/bin/bash
 APP=flaskr
 
+env: ## make virtual environment
+env: 
+	@echo "Creating virtual environment..."
+	@python3 -m venv .venv 
+
 deps: ## install required packages.
 deps: 
-	@echo "Installing package dependencies."
+	@echo "Installing package dependencies..."
 	@python3 -m pip install --upgrade pip
 	@pip install black coverage flake8 mypy pylint pytest tox
 	@pip install -r requirements.txt
 
 freeze: ## update requirements.txt file.
 freeze:
-	@echo "Freezing package dependencies."
+	@echo "Freezing package dependencies..."
 	pip freeze > requirements.txt
 
-# Run flask application.
+run: # Run flask application.
 run: 
-	flask --app $(APP) run 
+	@echo "Running flask application..."
+	@flask --app $(APP) run 
 
-# Run flask application in debug mode.
-debug: 
-	flask --app $(APP) run --debug
+debug: # Run flask application in debug mode.
+debug:
+	@echo "Running flask application in debug mode..."
+	@flask --app $(APP) run --debug
 
+db: # Init database.
+db:
+	@echo "Initing database..."
+	@flask --app $(APP) init-db
+
+lint: # Lint flask application in debug mode.
 lint: 
-	flake8 $(APP)
+	@flake8 $(APP)
 
+test: # Test flask application.
 test: lint
-	pytest -ra
+	@pytest -ra tests/
 
+push: # Push application for gihub repository.
 push:
-	git push && git push --tags
+	@git push && git push --tags
