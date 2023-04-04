@@ -44,3 +44,17 @@ test: lint
 push: # Push application for gihub repository.
 push:
 	@git push && git push --tags
+
+log: # Display git log
+log:
+	@git log --oneline --decorate --graph --all
+
+amend: # Ammend the commit
+amend: 
+	@git commit --amend
+
+reset: # Reset to the HEAD
+reset:
+	@git branch backup
+	@git reset --hard HEAD~1
+
