@@ -25,7 +25,7 @@ def create():
     if request.method == "POST":
         title = request.form["title"]
         body = request.form["body"]
-        errot = None
+        error = None
 
         if not title:
             error = "Title is required."
@@ -71,20 +71,20 @@ def update(id):
         body = request.form["body"]
         error = None
 
-    if not title:
-        error = "Title is required"
+        if not title:
+            error = "Title is required"
 
-    if error is not None:
-        flash(error)
-    else:
-        db = get_db()
-        db.execute(
-            "UPDATE post SET title = ?, body = ?" " WHERE id = ?", (title, body, id)
-        )
-        db.commit()
-        return redirect(url_for("blog.index"))
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                "UPDATE post SET title = ?, body = ?" " WHERE id = ?", (title, body, id)
+            )
+            db.commit()
+            return redirect(url_for("blog.index"))
 
-    return_template("blog/update.html", post=post)
+    render_template("blog/update.html", post=post)
 
 
 @bp.route("/<int:id>/delete", methods=("POST",))
