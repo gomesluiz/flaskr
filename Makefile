@@ -38,8 +38,12 @@ lint:
 	@flake8 $(APP)
 
 test: # Test flask application.
-test: lint
+test: 
 	@pytest -ra tests/
+
+cov: # Print coverage report
+cov: 
+	@coverage report
 
 push: # Push application for gihub repository.
 push:

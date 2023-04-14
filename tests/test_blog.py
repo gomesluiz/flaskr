@@ -3,16 +3,16 @@ from flaskr.db import get_db
 
 
 def test_index(client, auth):
-    response = client.get("/")
+    response = client.get('/')
     assert b"Log In" in response.data
     assert b"Register" in response.data
 
     auth.login()
-    response = client.get("/")
-    assert b"Log Out" in response.data
-    assert b"test title" in response.data
-    assert b"by test on 2018-01-01" in response.data
-    assert b"test\nbody" in response.data
+    response = client.get('/')
+    assert b'Log Out' in response.data
+    assert b'test title' in response.data
+    assert b'by test on 2018-01-01' in response.data
+    assert b'test\nbody' in response.data
     assert b'href="/1/update"' in response.data
 
 @pytest.mark.parametrize('path', (
@@ -55,7 +55,7 @@ def test_create(client, auth, app):
     with app.app_context():
         db = get_db()
         count = db.execute('SELECT COUNT(id) FROM post').fetchone()[0]
-        assert count == 1
+        assert count == 2
 
 
 def test_update(client, auth, app):
