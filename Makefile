@@ -1,5 +1,7 @@
 SHELL=/bin/bash
 APP=flaskr
+APP_SERVICE_NAME="flaskr-tutorial"
+RESOURCE_GROUP_NAME="348286_rg_9160"
 
 env: ## make virtual environment
 env: 
@@ -62,3 +64,25 @@ reset:
 	@git branch backup
 	@git reset --hard HEAD~1
 
+login:
+login: 
+	az login
+
+up:
+up:
+	az webapp up --name $(APP_SERVICE_NAME) --runtime PYTHON:3.9 --sku F1 --location "brazilsouth"
+	az webapp config set --resource-group $(RESOURCE_GROUP_NAME) --name $(APP_SERVICE_NAME) --startup-file "startup.sh"
+	az webapp log config --web-server-logging filesystem --name $(APP_SERVICE_NAME) --resource-group $(RESOURCE_GROUP_NAME) --detailed-error-messages true
+
+update:
+update:
+	az webapp update --resource-group $(RESOURCE_GROUP_NAME) --name $(APP_SERVICE_NAME)
+	
+
+delete:
+delete:
+	az webapp delete --name $(APP_SERVICE_NAME) --resource-group $(RESOURCE_GROUP_NAME)
+
+tail:
+tail:
+	az webapp log tail --name $(APP_SERVICE_NAME) --resource-group $(RESOURCE_GROUP_NAME)
